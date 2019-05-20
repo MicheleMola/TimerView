@@ -28,14 +28,27 @@
                                     <action selector="playPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5bJ-ci-wf4"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ptv-H0-F9U" customClass="TimerView" customModule="Timer" customModuleProvider="target">
+                                <rect key="frame" x="20" y="44" width="150" height="150"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="QFD-ah-Ou1"/>
+                                    <constraint firstAttribute="width" constant="150" id="fxz-9d-OsQ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Ody-PS-szI" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="84q-d8-g14"/>
+                            <constraint firstItem="Ptv-H0-F9U" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="D9m-lR-Tvn"/>
+                            <constraint firstItem="Ptv-H0-F9U" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="nba-av-3vi"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ody-PS-szI" secondAttribute="bottom" constant="91" id="znK-2s-1Uk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="timerView" destination="Ptv-H0-F9U" id="F6d-hJ-0Vd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

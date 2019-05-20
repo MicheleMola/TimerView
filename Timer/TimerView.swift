@@ -10,13 +10,29 @@ import UIKit
 
 class TimerView: UIView {
 
-  var timer: Timer?
-  var timerLabel = UILabel()
+  fileprivate var timer: Timer?
+  fileprivate var timerLabel = UILabel()
   
   fileprivate let shapeLayer = CAShapeLayer()
   
-  var strokeColor = UIColor.red.cgColor
-  var lineWidth: CGFloat = 10
+  var strokeColor = UIColor.red.cgColor {
+    didSet {
+      shapeLayer.strokeColor = strokeColor
+    }
+  }
+  
+  var lineWidth: CGFloat = 10 {
+    didSet {
+      shapeLayer.lineWidth = lineWidth
+    }
+  }
+  
+  var timerFontSize: CGFloat = 20 {
+    didSet {
+      self.timerLabel.font = self.timerLabel.font.withSize(timerFontSize)
+    }
+  }
+  
   var duration: Double = 10
 
   required init?(coder aDecoder: NSCoder) {    
@@ -34,17 +50,14 @@ class TimerView: UIView {
   
   private func addTimer() {
     
-    let frame = CGRect(x: self.bounds.midX - 25, y: self.bounds.midY - 15, width: 50, height: 30)
+    let width = self.bounds.midX/2
+    let height = self.bounds.midY/2
+    let frame = CGRect(x: self.bounds.midX - width/2, y: self.bounds.midY - height/2, width: width, height: height)
     self.timerLabel = UILabel(frame: frame)
-    self.timerLabel.textColor = UIColor.black
+    self.timerLabel.textColor = UIColor(cgColor: self.strokeColor)
     self.timerLabel.text = "\(Int(duration))"
     self.timerLabel.textAlignment = .center
-    
-    self.timerLabel.font = self.timerLabel.font.withSize(30.0)
-    
-    self.timerLabel.adjustsFontSizeToFitWidth = true
-    self.timerLabel.minimumScaleFactor = 0.1
-    self.timerLabel.numberOfLines = 1
+    self.timerLabel.font = self.timerLabel.font.withSize(timerFontSize)
     
     self.addSubview(timerLabel)
   }
@@ -52,36 +65,34 @@ class TimerView: UIView {
   private func generateCircle() {
     
     let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
-    let radius = self.bounds.midX / 2
+    let radius = min(self.bounds.midX, self.bounds.midY) - lineWidth/2
     
-    let circularPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true)
+    let circularPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 1.5 * CGFloat.pi, endAngle: 3.5 * CGFloat.pi, clockwise: true)
     
     shapeLayer.path = circularPath.cgPath
-    
     shapeLayer.fillColor = UIColor.clear.cgColor
-    shapeLayer.strokeColor = self.strokeColor
-    shapeLayer.lineWidth = self.lineWidth
     shapeLayer.lineCap = CAShapeLayerLineCap.round
     
-    shapeLayer.strokeEnd = 0
+    shapeLayer.strokeEnd = 0.0
     
     self.layer.addSublayer(shapeLayer)
     
-//    addAnimations()
+    addAnimations()
   }
   
   func addAnimations() {
     
     let progressAnimation = CABasicAnimation(keyPath: "strokeEnd")
-    progressAnimation.fromValue = 0
-    progressAnimation.toValue = 1
+    progressAnimation.fromValue = 0.0
+    progressAnimation.toValue = 1.0
     progressAnimation.duration = self.duration
     progressAnimation.beginTime = 0.0
-    progressAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-
+    progressAnimation.isRemovedOnCompletion = false
+    progressAnimation.fillMode = CAMediaTimingFillMode.forwards
+    
     let fillAnimation = CABasicAnimation(keyPath: "fillColor")
     fillAnimation.toValue = self.strokeColor
-    fillAnimation.beginTime = progressAnimation.beginTime + progressAnimation.duration - 1
+    fillAnimation.beginTime = progressAnimation.beginTime + progressAnimation.duration
     fillAnimation.duration = 0.5
     
     let groupAnimation = CAAnimationGroup()
@@ -89,8 +100,9 @@ class TimerView: UIView {
     groupAnimation.duration = fillAnimation.beginTime + fillAnimation.duration
     groupAnimation.fillMode = CAMediaTimingFillMode.forwards
     groupAnimation.isRemovedOnCompletion = false
+    groupAnimation.delegate = self
     
-    shapeLayer.add(groupAnimation, forKey: "progressAndFillAnimation")
+    shapeLayer.add(groupAnimation, forKey: "animations")
   }
   
   func startCountdown() {
@@ -103,12 +115,37 @@ class TimerView: UIView {
     duration -= 1
     self.timerLabel.text = "\(Int(duration))"
     
-    let normalizedDuration = CGFloat(1 - duration/20)
-    shapeLayer.strokeEnd = normalizedDuration
-    
     if duration == 0 {
       self.timer?.invalidate()
       self.timer = nil
+    }
+  }
+  
+  func createPlayButton() {
+    
+    let width = self.bounds.midX
+    let height = self.bounds.midY
+    
+    let path = UIBezierPath()
+    path.move(to: CGPoint(x: width/2, y: height/2))
+    path.addLine(to: CGPoint(x: width + width/2, y: height))
+    path.addLine(to: CGPoint(x: width/2, y: height + height/2))
+    path.close()
+    
+    let triangleLayer = CAShapeLayer()
+    triangleLayer.lineCap = CAShapeLayerLineCap.round
+    triangleLayer.lineJoin = CAShapeLayerLineJoin.round
+    triangleLayer.path = path.cgPath
+    triangleLayer.fillColor = UIColor(red: 242/255, green: 141/255, blue: 115/255, alpha: 1).cgColor
+    
+    self.shapeLayer.addSublayer(triangleLayer)
+  }
+}
+
+extension TimerView: CAAnimationDelegate {
+  func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+    if flag {
+      createPlayButton()
     }
   }
 }
