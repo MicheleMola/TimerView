@@ -12,10 +12,9 @@ class TimerView: UIView {
 
   fileprivate var timer: Timer?
   fileprivate var timerLabel = UILabel()
-  
   fileprivate let shapeLayer = CAShapeLayer()
   
-  var strokeColor = UIColor.red.cgColor {
+  var strokeColor = UIColor.white.cgColor {
     didSet {
       shapeLayer.strokeColor = strokeColor
     }
@@ -24,6 +23,8 @@ class TimerView: UIView {
   var lineWidth: CGFloat = 10 {
     didSet {
       shapeLayer.lineWidth = lineWidth
+      
+      generateCircle()
     }
   }
   
@@ -33,19 +34,27 @@ class TimerView: UIView {
     }
   }
   
-  var duration: Double = 10
-
-  required init?(coder aDecoder: NSCoder) {    
+  var duration: Double = 10 {
+    didSet {
+      self.timerLabel.text = "\(Int(duration))"
+    }
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+    
+    addTimer()
   }
   
   override init(frame: CGRect) {
     super.init(frame: frame)
+
+    addTimer()
   }
   
   func startAnimation() {
-    addTimer()
     startCountdown()
+    addAnimations()
   }
   
   private func addTimer() {
@@ -73,27 +82,23 @@ class TimerView: UIView {
     shapeLayer.fillColor = UIColor.clear.cgColor
     shapeLayer.lineCap = CAShapeLayerLineCap.round
     
-    shapeLayer.strokeEnd = 0.0
+    shapeLayer.strokeEnd = 1
     
     self.layer.addSublayer(shapeLayer)
-    
-    addAnimations()
   }
   
   func addAnimations() {
     
     let progressAnimation = CABasicAnimation(keyPath: "strokeEnd")
-    progressAnimation.fromValue = 0.0
-    progressAnimation.toValue = 1.0
+    progressAnimation.fromValue = 1
+    progressAnimation.toValue = 0
     progressAnimation.duration = self.duration
     progressAnimation.beginTime = 0.0
-    progressAnimation.isRemovedOnCompletion = false
-    progressAnimation.fillMode = CAMediaTimingFillMode.forwards
     
     let fillAnimation = CABasicAnimation(keyPath: "fillColor")
     fillAnimation.toValue = self.strokeColor
     fillAnimation.beginTime = progressAnimation.beginTime + progressAnimation.duration
-    fillAnimation.duration = 0.5
+    fillAnimation.duration = 0.1
     
     let groupAnimation = CAAnimationGroup()
     groupAnimation.animations = [progressAnimation, fillAnimation]
@@ -112,6 +117,7 @@ class TimerView: UIView {
   }
   
   @objc func updateTime() {
+    
     duration -= 1
     self.timerLabel.text = "\(Int(duration))"
     
@@ -126,10 +132,13 @@ class TimerView: UIView {
     let width = self.bounds.midX
     let height = self.bounds.midY
     
+    // Only for our triangle
+    let magicOffset = self.bounds.width * 0.061
+    
     let path = UIBezierPath()
-    path.move(to: CGPoint(x: width/2, y: height/2))
-    path.addLine(to: CGPoint(x: width + width/2, y: height))
-    path.addLine(to: CGPoint(x: width/2, y: height + height/2))
+    path.move(to: CGPoint(x: width/2 + magicOffset, y: height/2))
+    path.addLine(to: CGPoint(x: width + width/2 + magicOffset, y: height))
+    path.addLine(to: CGPoint(x: width/2 + magicOffset, y: height + height/2))
     path.close()
     
     let triangleLayer = CAShapeLayer()
@@ -140,11 +149,23 @@ class TimerView: UIView {
     
     self.shapeLayer.addSublayer(triangleLayer)
   }
+  
+  func addTapGesture() {
+    let tap = UITapGestureRecognizer(target: self, action: #selector(TimerView.tapFunction))
+    self.isUserInteractionEnabled = true
+    self.addGestureRecognizer(tap)
+  }
+  
+  @objc func tapFunction(sender: UITapGestureRecognizer) {
+    self.layer.sublayers?.removeAll()
+    print("tap working")
+  }
 }
 
 extension TimerView: CAAnimationDelegate {
   func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
     if flag {
+      addTapGesture()
       createPlayButton()
     }
   }

@@ -16,8 +16,8 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     
     self.timerView.strokeColor = UIColor.white.cgColor
-    self.timerView.lineWidth = 10
-    self.timerView.duration = 10
+    self.timerView.lineWidth = 6
+    self.timerView.duration = 5
     self.timerView.timerFontSize = 20
   }
   
