@@ -12,7 +12,9 @@ class TimerView: UIView {
 
   fileprivate var timer: Timer?
   fileprivate var timerLabel = UILabel()
-  fileprivate let shapeLayer = CAShapeLayer()
+  fileprivate var shapeLayer = CAShapeLayer()
+  
+  var tempDuration: Double = 10
   
   var strokeColor = UIColor.white.cgColor {
     didSet {
@@ -41,18 +43,22 @@ class TimerView: UIView {
   }
   
   required init?(coder aDecoder: NSCoder) {
+    shapeLayer = CAShapeLayer()
     super.init(coder: aDecoder)
     
     addTimer()
   }
   
   override init(frame: CGRect) {
+    shapeLayer = CAShapeLayer()
     super.init(frame: frame)
 
     addTimer()
   }
   
   func startAnimation() {
+    
+    tempDuration = duration
     startCountdown()
     addAnimations()
   }
@@ -83,6 +89,8 @@ class TimerView: UIView {
     shapeLayer.lineCap = CAShapeLayerLineCap.round
     
     shapeLayer.strokeEnd = 1
+    shapeLayer.strokeColor = strokeColor
+    shapeLayer.lineWidth = lineWidth
     
     self.layer.addSublayer(shapeLayer)
   }
@@ -118,10 +126,10 @@ class TimerView: UIView {
   
   @objc func updateTime() {
     
-    duration -= 1
-    self.timerLabel.text = "\(Int(duration))"
+    tempDuration -= 1
+    self.timerLabel.text = "\(Int(tempDuration))"
     
-    if duration == 0 {
+    if tempDuration == 0 {
       self.timer?.invalidate()
       self.timer = nil
     }
@@ -131,14 +139,12 @@ class TimerView: UIView {
     
     let width = self.bounds.midX
     let height = self.bounds.midY
-    
-    // Only for our triangle
-    let magicOffset = self.bounds.width * 0.061
-    
+  
     let path = UIBezierPath()
-    path.move(to: CGPoint(x: width/2 + magicOffset, y: height/2))
-    path.addLine(to: CGPoint(x: width + width/2 + magicOffset, y: height))
-    path.addLine(to: CGPoint(x: width/2 + magicOffset, y: height + height/2))
+    
+    path.move(to: CGPoint(x: width - width/4 - width/8, y: height/2))
+    path.addLine(to: CGPoint(x: width + width/8 + width/4, y: height))
+    path.addLine(to: CGPoint(x: width - width/4 - width/8, y: height + height/2))
     path.close()
     
     let triangleLayer = CAShapeLayer()
@@ -157,8 +163,18 @@ class TimerView: UIView {
   }
   
   @objc func tapFunction(sender: UITapGestureRecognizer) {
+    restart()
+  }
+  
+  private func restart() {
+    self.isUserInteractionEnabled = false
+    
     self.layer.sublayers?.removeAll()
-    print("tap working")
+    
+    addTimer()
+    
+    shapeLayer = CAShapeLayer()
+    generateCircle()
   }
 }
 
