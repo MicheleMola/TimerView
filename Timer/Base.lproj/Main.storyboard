@@ -36,17 +36,27 @@
                                     <constraint firstAttribute="width" constant="100" id="fxz-9d-OsQ"/>
                                 </constraints>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Qp-Oz-kfd">
+                                <rect key="frame" x="87" y="328" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="EJJ-Vk-DWB"/>
+                                    <constraint firstAttribute="height" constant="240" id="KDg-cn-0cM"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Ody-PS-szI" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="84q-d8-g14"/>
                             <constraint firstItem="Ptv-H0-F9U" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="D9m-lR-Tvn"/>
+                            <constraint firstItem="7Qp-Oz-kfd" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="na7-6e-5lB"/>
                             <constraint firstItem="Ptv-H0-F9U" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="nba-av-3vi"/>
+                            <constraint firstItem="7Qp-Oz-kfd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uv1-KN-0BK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ody-PS-szI" secondAttribute="bottom" constant="91" id="znK-2s-1Uk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="cameraImageView" destination="7Qp-Oz-kfd" id="eLo-qe-477"/>
                         <outlet property="timerView" destination="Ptv-H0-F9U" id="F6d-hJ-0Vd"/>
                     </connections>
                 </viewController>
