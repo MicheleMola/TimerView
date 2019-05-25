@@ -65,8 +65,8 @@ class TimerView: UIView {
   
   private func addTimer() {
     
-    let width = self.bounds.midX/2
-    let height = self.bounds.midY/2
+    let width = self.bounds.midX
+    let height = self.bounds.midY
     let frame = CGRect(x: self.bounds.midX - width/2, y: self.bounds.midY - height/2, width: width, height: height)
     self.timerLabel = UILabel(frame: frame)
     self.timerLabel.textColor = UIColor(cgColor: self.strokeColor)
@@ -95,7 +95,7 @@ class TimerView: UIView {
     self.layer.addSublayer(shapeLayer)
   }
   
-  func addAnimations() {
+  private func addAnimations() {
     
     let progressAnimation = CABasicAnimation(keyPath: "strokeEnd")
     progressAnimation.fromValue = 1
@@ -118,7 +118,7 @@ class TimerView: UIView {
     shapeLayer.add(groupAnimation, forKey: "animations")
   }
   
-  func startCountdown() {
+  private func startCountdown() {
     generateCircle()
     
     self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
@@ -135,7 +135,7 @@ class TimerView: UIView {
     }
   }
   
-  func createPlayButton() {
+  private func createPlayButton() {
     
     let width = self.bounds.midX
     let height = self.bounds.midY
@@ -151,7 +151,11 @@ class TimerView: UIView {
     triangleLayer.lineCap = CAShapeLayerLineCap.round
     triangleLayer.lineJoin = CAShapeLayerLineJoin.round
     triangleLayer.path = path.cgPath
-    triangleLayer.fillColor = UIColor(red: 242/255, green: 141/255, blue: 115/255, alpha: 1).cgColor
+    triangleLayer.lineWidth = 4
+    
+    let color = UIColor(red: 242/255, green: 141/255, blue: 115/255, alpha: 1).cgColor
+    triangleLayer.strokeColor = color
+    triangleLayer.fillColor = color
     
     self.shapeLayer.addSublayer(triangleLayer)
   }
