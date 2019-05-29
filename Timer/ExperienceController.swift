@@ -13,8 +13,14 @@ class ExperienceController: UIViewController {
   
   @IBOutlet weak var ARSceneView: ARSCNView!
   
+  @IBOutlet weak var buildingImageView: UIImageView!
+  
   @IBOutlet weak var timerView: TimerView!
   
+  @IBOutlet weak var buildingImageViewTopConstraint: NSLayoutConstraint!
+  @IBOutlet weak var buildingImageViewLeadingConstraint: NSLayoutConstraint!
+  @IBOutlet weak var buildingImageViewWidthConstraint: NSLayoutConstraint!
+  @IBOutlet weak var buildingImageViewHeightConstraint: NSLayoutConstraint!
   /// A serial queue for thread safety when modifying the SceneKit node graph.
   let updateQueue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".serialSceneKitQueue")
   
@@ -40,6 +46,10 @@ class ExperienceController: UIViewController {
   override func viewDidAppear(_ animated: Bool) {
     // Prevent the screen from being dimmed to avoid interuppting the AR experience.
     UIApplication.shared.isIdleTimerDisabled = true
+  
+    setupView()
+    
+    print(self.view.safeAreaInsets)
     
     // Start the AR experience
     resetTracking()
@@ -62,7 +72,89 @@ class ExperienceController: UIViewController {
     session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     
     //statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
+    startTutorial()
   }
+  
+  func startTutorial() {
+    buildingImageView.isHidden = false
+    // Start Gif
+    
+    // Start timer and then move image to the bottom-right corner
+    animateBuildingImageView()
+  }
+  
+  func animateBuildingImageView() {
+    
+    let safeAreaInsets = self.view.safeAreaInsets
+    let buildingImageViewWidth = self.buildingImageView.frame.width
+    
+    UIView.animate(withDuration: 1, delay: 5, options: [], animations: {
+      
+      let leadingConstraint = self.view.frame.width - (buildingImageViewWidth/2) - 16
+      let topConstraint = self.view.frame.height - safeAreaInsets.top - safeAreaInsets.bottom - (buildingImageViewWidth/2) - 8
+      
+      self.buildingImageViewLeadingConstraint.constant = leadingConstraint
+      self.buildingImageViewTopConstraint.constant = topConstraint
+      
+      self.buildingImageViewWidthConstraint.constant /= 2
+      self.buildingImageViewHeightConstraint.constant /= 2
+      
+      self.view.layoutIfNeeded()
+    })
+  
+  }
+
+  func setupView() {
+    
+    let safeAreaInsets = self.view.safeAreaInsets
+    
+    let leadingConstraint = self.view.frame.width/2 - self.buildingImageView.frame.width/2 - safeAreaInsets.left
+    let topConstraint = self.view.frame.height/2 - self.buildingImageView.frame.height/2 - safeAreaInsets.top
+    
+    self.buildingImageViewLeadingConstraint.constant = leadingConstraint
+    self.buildingImageViewTopConstraint.constant = topConstraint
+    
+    self.view.layoutIfNeeded()
+  }
+  
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    
+    updateLayout(with: size)
+  }
+  
+  
+  func updateLayout(with view: CGSize) {
+    
+    var leadingConstraint: CGFloat = 0
+    var topConstraint: CGFloat = 0
+    
+    if isCentered(view: self.buildingImageView.frame, in: view) {
+      leadingConstraint = view.width/2 - self.buildingImageView.frame.width/2
+      topConstraint = view.height/2 - self.buildingImageView.frame.height/2
+    } else {
+      if view.width < view.height {
+        leadingConstraint = view.width - self.buildingImageView.frame.width - 16
+        topConstraint = view.height - self.buildingImageView.frame.height - 34 - 44 - 8
+      } else {
+        leadingConstraint = view.width - self.buildingImageView.frame.width - 44 - 34
+        topConstraint = view.height - self.buildingImageView.frame.height - 21 - 8
+      }
+      
+    }
+    
+    self.buildingImageViewLeadingConstraint.constant = leadingConstraint
+    self.buildingImageViewTopConstraint.constant = topConstraint
+    
+    self.view.layoutIfNeeded()
+  }
+  
+  func isCentered(view: CGRect, in superview: CGSize) -> Bool {
+    if view.origin.x == superview.width/2 - view.width/2 {
+      return true
+    }
+    return false
+  }
+  
 }
 
 extension ExperienceController: ARSCNViewDelegate {
@@ -90,7 +182,6 @@ extension ExperienceController: ARSCNViewDelegate {
     
     DispatchQueue.main.async {
       let imageName = referenceImage.name ?? ""
-      print(imageName)
       self.timerView.startAnimation()
     }
   }
