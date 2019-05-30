@@ -90,7 +90,8 @@ class ExperienceController: UIViewController {
     
     UIView.animate(withDuration: 1, delay: 5, options: [], animations: {
       
-      let leadingConstraint = self.view.frame.width - (buildingImageViewWidth/2) - 16
+      print(safeAreaInsets)
+      let leadingConstraint = self.view.frame.width - (buildingImageViewWidth/2) - safeAreaInsets.left - safeAreaInsets.right - 16
       let topConstraint = self.view.frame.height - safeAreaInsets.top - safeAreaInsets.bottom - (buildingImageViewWidth/2) - 8
       
       self.buildingImageViewLeadingConstraint.constant = leadingConstraint

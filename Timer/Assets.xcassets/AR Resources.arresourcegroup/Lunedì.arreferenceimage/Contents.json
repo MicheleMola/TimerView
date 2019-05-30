@@ -10,6 +10,7 @@
     "author" : "xcode"
   },
   "properties" : {
-    "width" : 3
+    "width" : 25,
+    "unit" : "centimeters"
   }
 }
