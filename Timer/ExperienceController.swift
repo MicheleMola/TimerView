@@ -14,11 +14,10 @@ class ExperienceController: UIViewController {
   @IBOutlet weak var ARSceneView: ARSCNView!
   
   @IBOutlet weak var buildingImageView: UIImageView!
+  @IBOutlet weak var smallBuildingImageView: UIImageView!
   
   @IBOutlet weak var timerView: TimerView!
   
-  @IBOutlet weak var buildingImageViewTopConstraint: NSLayoutConstraint!
-  @IBOutlet weak var buildingImageViewLeadingConstraint: NSLayoutConstraint!
   @IBOutlet weak var buildingImageViewWidthConstraint: NSLayoutConstraint!
   @IBOutlet weak var buildingImageViewHeightConstraint: NSLayoutConstraint!
   /// A serial queue for thread safety when modifying the SceneKit node graph.
@@ -29,6 +28,11 @@ class ExperienceController: UIViewController {
     return ARSceneView.session
   }
   
+  var isPlaced = false
+  
+  var initialLeadingConstraint: CGFloat = 0
+  var initialTopConstraint: CGFloat = 0
+  
   override func viewDidLoad() {
     ARSceneView.delegate = self
     ARSceneView.session.delegate = self
@@ -37,9 +41,10 @@ class ExperienceController: UIViewController {
   }
   
   func setupTimerView() {
+    
     self.timerView.strokeColor = UIColor.white.cgColor
     self.timerView.lineWidth = 6
-    self.timerView.duration = 5
+    self.timerView.duration = 8
     self.timerView.timerFontSize = 20
   }
   
@@ -48,8 +53,6 @@ class ExperienceController: UIViewController {
     UIApplication.shared.isIdleTimerDisabled = true
   
     setupView()
-    
-    print(self.view.safeAreaInsets)
     
     // Start the AR experience
     resetTracking()
@@ -71,12 +74,12 @@ class ExperienceController: UIViewController {
     configuration.detectionImages = referenceImages
     session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     
-    //statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
     startTutorial()
   }
   
   func startTutorial() {
     buildingImageView.isHidden = false
+    
     // Start Gif
     
     // Start timer and then move image to the bottom-right corner
@@ -85,75 +88,16 @@ class ExperienceController: UIViewController {
   
   func animateBuildingImageView() {
     
-    let safeAreaInsets = self.view.safeAreaInsets
-    let buildingImageViewWidth = self.buildingImageView.frame.width
-    
-    UIView.animate(withDuration: 1, delay: 5, options: [], animations: {
+    UIView.animate(withDuration: 1, delay: 5, options: [], animations: { [unowned self] in
       
-      print(safeAreaInsets)
-      let leadingConstraint = self.view.frame.width - (buildingImageViewWidth/2) - safeAreaInsets.left - safeAreaInsets.right - 16
-      let topConstraint = self.view.frame.height - safeAreaInsets.top - safeAreaInsets.bottom - (buildingImageViewWidth/2) - 8
-      
-      self.buildingImageViewLeadingConstraint.constant = leadingConstraint
-      self.buildingImageViewTopConstraint.constant = topConstraint
-      
-      self.buildingImageViewWidthConstraint.constant /= 2
-      self.buildingImageViewHeightConstraint.constant /= 2
-      
-      self.view.layoutIfNeeded()
+      self.buildingImageView.alpha = 0
+      self.smallBuildingImageView.alpha = 1
     })
   
   }
 
   func setupView() {
     
-    let safeAreaInsets = self.view.safeAreaInsets
-    
-    let leadingConstraint = self.view.frame.width/2 - self.buildingImageView.frame.width/2 - safeAreaInsets.left
-    let topConstraint = self.view.frame.height/2 - self.buildingImageView.frame.height/2 - safeAreaInsets.top
-    
-    self.buildingImageViewLeadingConstraint.constant = leadingConstraint
-    self.buildingImageViewTopConstraint.constant = topConstraint
-    
-    self.view.layoutIfNeeded()
-  }
-  
-  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    
-    updateLayout(with: size)
-  }
-  
-  
-  func updateLayout(with view: CGSize) {
-    
-    var leadingConstraint: CGFloat = 0
-    var topConstraint: CGFloat = 0
-    
-    if isCentered(view: self.buildingImageView.frame, in: view) {
-      leadingConstraint = view.width/2 - self.buildingImageView.frame.width/2
-      topConstraint = view.height/2 - self.buildingImageView.frame.height/2
-    } else {
-      if view.width < view.height {
-        leadingConstraint = view.width - self.buildingImageView.frame.width - 16
-        topConstraint = view.height - self.buildingImageView.frame.height - 34 - 44 - 8
-      } else {
-        leadingConstraint = view.width - self.buildingImageView.frame.width - 44 - 34
-        topConstraint = view.height - self.buildingImageView.frame.height - 21 - 8
-      }
-      
-    }
-    
-    self.buildingImageViewLeadingConstraint.constant = leadingConstraint
-    self.buildingImageViewTopConstraint.constant = topConstraint
-    
-    self.view.layoutIfNeeded()
-  }
-  
-  func isCentered(view: CGRect, in superview: CGSize) -> Bool {
-    if view.origin.x == superview.width/2 - view.width/2 {
-      return true
-    }
-    return false
   }
   
 }
@@ -177,14 +121,29 @@ extension ExperienceController: ARSCNViewDelegate {
        */
       planeNode.eulerAngles.x = -.pi / 2
       
+      planeNode.runAction(self.imageHighlightAction)
+      
       // Add the plane visualization to the scene.
       node.addChildNode(planeNode)
     }
     
     DispatchQueue.main.async {
       let imageName = referenceImage.name ?? ""
+      
+      self.smallBuildingImageView.alpha = 0
       self.timerView.startAnimation()
     }
+  }
+  
+  var imageHighlightAction: SCNAction {
+    return .sequence([
+      .wait(duration: 0),
+      .fadeOpacity(to: 0.85, duration: 2),
+      .fadeOpacity(to: 0.15, duration: 2),
+      .fadeOpacity(to: 0.85, duration: 2),
+      .fadeOut(duration: 2),
+      .removeFromParentNode()
+      ])
   }
 }
 
