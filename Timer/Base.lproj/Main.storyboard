@@ -98,36 +98,65 @@
                                     <constraint firstAttribute="width" constant="80" id="iBY-Mr-Z6p"/>
                                 </constraints>
                             </view>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group" translatesAutoresizingMaskIntoConstraints="NO" id="eBP-vI-b2V">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Group" translatesAutoresizingMaskIntoConstraints="NO" id="eBP-vI-b2V">
                                 <rect key="frame" x="107" y="348" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="B3Y-cY-Yfw"/>
                                     <constraint firstAttribute="height" constant="200" id="lCI-4Z-s5e"/>
                                 </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="v4U-3x-Vyh">
+                                <rect key="frame" x="152" y="564" width="110.5" height="51"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 %" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M7D-b5-gh4">
+                                        <rect key="frame" x="39.5" y="0.0" width="31.5" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vdX-q0-GRi">
+                                        <rect key="frame" x="0.0" y="29.5" width="110.5" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CZW-9K-xOb">
+                                <rect key="frame" x="0.0" y="303" width="414" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="5NM-8t-5Wb"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="v4U-3x-Vyh" firstAttribute="centerX" secondItem="TtU-MW-dmj" secondAttribute="centerX" id="2cW-4x-mDd"/>
                             <constraint firstItem="MuA-hp-R15" firstAttribute="top" secondItem="TtU-MW-dmj" secondAttribute="top" constant="16" id="2uI-hB-uVz"/>
                             <constraint firstItem="80o-Vc-cXs" firstAttribute="leading" secondItem="TtU-MW-dmj" secondAttribute="leading" constant="16" id="4qp-YA-UjJ"/>
                             <constraint firstItem="TtU-MW-dmj" firstAttribute="trailing" secondItem="RJv-h3-cRR" secondAttribute="trailing" constant="16" id="91X-N6-dS5"/>
                             <constraint firstItem="TtU-MW-dmj" firstAttribute="trailing" secondItem="MuA-hp-R15" secondAttribute="trailing" constant="32" id="E8D-Xd-kvX"/>
+                            <constraint firstItem="v4U-3x-Vyh" firstAttribute="top" secondItem="eBP-vI-b2V" secondAttribute="bottom" constant="16" id="IeH-is-ehE"/>
+                            <constraint firstItem="CZW-9K-xOb" firstAttribute="width" secondItem="SHE-uJ-VmQ" secondAttribute="width" id="KhJ-oI-zAQ"/>
                             <constraint firstItem="eBP-vI-b2V" firstAttribute="centerY" secondItem="YrQ-pV-Vj9" secondAttribute="centerY" id="Rdk-fi-Z6m"/>
                             <constraint firstItem="TtU-MW-dmj" firstAttribute="bottom" secondItem="80o-Vc-cXs" secondAttribute="bottom" constant="8" id="dWw-5v-LZF"/>
                             <constraint firstItem="SHE-uJ-VmQ" firstAttribute="leading" secondItem="YrQ-pV-Vj9" secondAttribute="leading" id="eQn-XT-qVm"/>
                             <constraint firstAttribute="trailing" secondItem="SHE-uJ-VmQ" secondAttribute="trailing" id="fsf-7c-lvg"/>
                             <constraint firstItem="SHE-uJ-VmQ" firstAttribute="top" secondItem="YrQ-pV-Vj9" secondAttribute="top" id="h64-bT-4as"/>
+                            <constraint firstItem="CZW-9K-xOb" firstAttribute="centerX" secondItem="TtU-MW-dmj" secondAttribute="centerX" id="icW-lG-NCu"/>
                             <constraint firstItem="TtU-MW-dmj" firstAttribute="bottom" secondItem="RJv-h3-cRR" secondAttribute="bottom" constant="8" id="j1t-Ze-fpp"/>
                             <constraint firstAttribute="bottom" secondItem="SHE-uJ-VmQ" secondAttribute="bottom" id="ny2-kh-tVX"/>
                             <constraint firstItem="eBP-vI-b2V" firstAttribute="centerX" secondItem="YrQ-pV-Vj9" secondAttribute="centerX" id="orH-Lw-93C"/>
+                            <constraint firstItem="CZW-9K-xOb" firstAttribute="centerY" secondItem="TtU-MW-dmj" secondAttribute="centerY" id="ouz-5q-nUR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TtU-MW-dmj"/>
                     </view>
                     <connections>
                         <outlet property="ARSceneView" destination="SHE-uJ-VmQ" id="RNn-Oe-zxc"/>
                         <outlet property="buildingImageView" destination="eBP-vI-b2V" id="7Do-EF-xZS"/>
-                        <outlet property="buildingImageViewHeightConstraint" destination="lCI-4Z-s5e" id="nTc-yT-adP"/>
-                        <outlet property="buildingImageViewWidthConstraint" destination="B3Y-cY-Yfw" id="0Dz-if-smB"/>
+                        <outlet property="gifImageView" destination="CZW-9K-xOb" id="Nwg-yq-WK8"/>
+                        <outlet property="progressLabel" destination="M7D-b5-gh4" id="V3p-yp-lZN"/>
+                        <outlet property="progressStackView" destination="v4U-3x-Vyh" id="7cR-d1-uf9"/>
                         <outlet property="smallBuildingImageView" destination="RJv-h3-cRR" id="jKv-Hn-LIm"/>
                         <outlet property="timerView" destination="80o-Vc-cXs" id="dLf-yY-sYn"/>
                     </connections>
@@ -139,6 +168,6 @@
     </scenes>
     <resources>
         <image name="Combined Shape" width="34" height="34"/>
-        <image name="Group" width="203" height="203"/>
+        <image name="Group" width="306" height="306"/>
     </resources>
 </document>

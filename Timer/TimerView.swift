@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol TimerViewDelegate: class {
+  func restart()
+}
+
 class TimerView: UIView {
 
   fileprivate var timer: Timer?
@@ -15,6 +19,8 @@ class TimerView: UIView {
   fileprivate var shapeLayer = CAShapeLayer()
   
   var tempDuration: Double = 10
+  
+  weak var delegate: TimerViewDelegate?
   
   var strokeColor = UIColor.white.cgColor {
     didSet {
@@ -142,16 +148,19 @@ class TimerView: UIView {
   
     let path = UIBezierPath()
     
-    path.move(to: CGPoint(x: width - width/4 - width/8, y: height/2))
-    path.addLine(to: CGPoint(x: width + width/8 + width/4, y: height))
-    path.addLine(to: CGPoint(x: width - width/4 - width/8, y: height + height/2))
+    // Remove optical effect
+    let magicOffset = (3 * self.bounds.width) / 55
+    
+    path.move(to: CGPoint(x: (width - width/4 - width/8) + magicOffset, y: height/2))
+    path.addLine(to: CGPoint(x: (width + width/8 + width/4) + magicOffset, y: height))
+    path.addLine(to: CGPoint(x: (width - width/4 - width/8) + magicOffset, y: height + height/2))
     path.close()
     
     let triangleLayer = CAShapeLayer()
     triangleLayer.lineCap = CAShapeLayerLineCap.round
     triangleLayer.lineJoin = CAShapeLayerLineJoin.round
     triangleLayer.path = path.cgPath
-    triangleLayer.lineWidth = 4
+    triangleLayer.lineWidth = 2
     
     let color = UIColor(red: 242/255, green: 141/255, blue: 115/255, alpha: 1).cgColor
     triangleLayer.strokeColor = color
@@ -172,6 +181,8 @@ class TimerView: UIView {
   
   private func restart() {
     self.isUserInteractionEnabled = false
+    
+    delegate?.restart()
     
     self.layer.sublayers?.removeAll()
     

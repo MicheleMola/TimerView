@@ -7,12 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		118D746DB89A9523FFCABBAD /* Pods_Timer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD9FF4056001FF79DB400588 /* Pods_Timer.framework */; };
+		DE3C99AD22A81D2000C48704 /* ARResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C99AC22A81D2000C48704 /* ARResourceManager.swift */; };
+		DE3C99B122A8293000C48704 /* hand.gif in Resources */ = {isa = PBXBuildFile; fileRef = DE3C99B022A8293000C48704 /* hand.gif */; };
+		DE3C99B322A9467700C48704 /* ExperienceStorage.plist in Resources */ = {isa = PBXBuildFile; fileRef = DE3C99B222A9467700C48704 /* ExperienceStorage.plist */; };
+		DE3C99B522AA9E4200C48704 /* ARResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C99B422AA9E4200C48704 /* ARResources.swift */; };
+		DE3C99B722AAB55500C48704 /* DiskCareTaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3C99B622AAB55500C48704 /* DiskCareTaker.swift */; };
 		DE56824E22903B5900C3D776 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE56824D22903B5900C3D776 /* AppDelegate.swift */; };
 		DE56825022903B5900C3D776 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE56824F22903B5900C3D776 /* ViewController.swift */; };
 		DE56825322903B5900C3D776 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE56825122903B5900C3D776 /* Main.storyboard */; };
 		DE56825522903B5D00C3D776 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE56825422903B5D00C3D776 /* Assets.xcassets */; };
 		DE56825822903B5D00C3D776 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE56825622903B5D00C3D776 /* LaunchScreen.storyboard */; };
 		DE56826022903E2A00C3D776 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE56825F22903E2A00C3D776 /* TimerView.swift */; };
+		DE6C7EAF22A580CB007702AF /* ExperienceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C7EAE22A580CB007702AF /* ExperienceScene.swift */; };
+		DE6C7EB122A58926007702AF /* videoL.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DE6C7EB022A58925007702AF /* videoL.mp4 */; };
+		DE6C7EBB22A6D86F007702AF /* grey.gif in Resources */ = {isa = PBXBuildFile; fileRef = DE6C7EBA22A6D86F007702AF /* grey.gif */; };
 		DECB94CC22954F070057E943 /* Camera_17.png in Resources */ = {isa = PBXBuildFile; fileRef = DECB941222954F070057E943 /* Camera_17.png */; };
 		DECB94CD22954F070057E943 /* Camera_7.png in Resources */ = {isa = PBXBuildFile; fileRef = DECB941322954F070057E943 /* Camera_7.png */; };
 		DECB94CE22954F070057E943 /* Camera_148.png in Resources */ = {isa = PBXBuildFile; fileRef = DECB941422954F070057E943 /* Camera_148.png */; };
@@ -203,6 +212,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		380D889AA9D1E5729977B4D7 /* Pods-Timer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Timer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Timer/Pods-Timer.debug.xcconfig"; sourceTree = "<group>"; };
+		5FFE317435E10229E22F03F9 /* Pods-Timer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Timer.release.xcconfig"; path = "Pods/Target Support Files/Pods-Timer/Pods-Timer.release.xcconfig"; sourceTree = "<group>"; };
+		BD9FF4056001FF79DB400588 /* Pods_Timer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Timer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE3C99AC22A81D2000C48704 /* ARResourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARResourceManager.swift; sourceTree = "<group>"; };
+		DE3C99B022A8293000C48704 /* hand.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = hand.gif; sourceTree = "<group>"; };
+		DE3C99B222A9467700C48704 /* ExperienceStorage.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExperienceStorage.plist; sourceTree = "<group>"; };
+		DE3C99B422AA9E4200C48704 /* ARResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARResources.swift; sourceTree = "<group>"; };
+		DE3C99B622AAB55500C48704 /* DiskCareTaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCareTaker.swift; sourceTree = "<group>"; };
 		DE56824A22903B5900C3D776 /* Timer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE56824D22903B5900C3D776 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE56824F22903B5900C3D776 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +228,9 @@
 		DE56825722903B5D00C3D776 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE56825922903B5D00C3D776 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE56825F22903E2A00C3D776 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		DE6C7EAE22A580CB007702AF /* ExperienceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceScene.swift; sourceTree = "<group>"; };
+		DE6C7EB022A58925007702AF /* videoL.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = videoL.mp4; sourceTree = "<group>"; };
+		DE6C7EBA22A6D86F007702AF /* grey.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = grey.gif; sourceTree = "<group>"; };
 		DECB941222954F070057E943 /* Camera_17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Camera_17.png; sourceTree = "<group>"; };
 		DECB941322954F070057E943 /* Camera_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Camera_7.png; sourceTree = "<group>"; };
 		DECB941422954F070057E943 /* Camera_148.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Camera_148.png; sourceTree = "<group>"; };
@@ -405,17 +425,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				118D746DB89A9523FFCABBAD /* Pods_Timer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		47312188BFB963488D6E497C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				380D889AA9D1E5729977B4D7 /* Pods-Timer.debug.xcconfig */,
+				5FFE317435E10229E22F03F9 /* Pods-Timer.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DE56824122903B5900C3D776 = {
 			isa = PBXGroup;
 			children = (
 				DE56824C22903B5900C3D776 /* Timer */,
 				DE56824B22903B5900C3D776 /* Products */,
+				47312188BFB963488D6E497C /* Pods */,
+				E60E51FF9616C78C9AF1BE77 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -438,7 +470,15 @@
 				DECB941122954F070057E943 /* Camera */,
 				DE56825922903B5D00C3D776 /* Info.plist */,
 				DE56825F22903E2A00C3D776 /* TimerView.swift */,
+				DE6C7EBA22A6D86F007702AF /* grey.gif */,
+				DE3C99B022A8293000C48704 /* hand.gif */,
+				DE6C7EB022A58925007702AF /* videoL.mp4 */,
 				DEEDA614229821920000BE5B /* ExperienceController.swift */,
+				DE3C99B222A9467700C48704 /* ExperienceStorage.plist */,
+				DE6C7EAE22A580CB007702AF /* ExperienceScene.swift */,
+				DE3C99AC22A81D2000C48704 /* ARResourceManager.swift */,
+				DE3C99B422AA9E4200C48704 /* ARResources.swift */,
+				DE3C99B622AAB55500C48704 /* DiskCareTaker.swift */,
 			);
 			path = Timer;
 			sourceTree = "<group>";
@@ -636,6 +676,14 @@
 			path = Camera;
 			sourceTree = "<group>";
 		};
+		E60E51FF9616C78C9AF1BE77 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BD9FF4056001FF79DB400588 /* Pods_Timer.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -643,9 +691,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DE56825C22903B5D00C3D776 /* Build configuration list for PBXNativeTarget "Timer" */;
 			buildPhases = (
+				33DA2E7DCB38E707FF3080F1 /* [CP] Check Pods Manifest.lock */,
 				DE56824622903B5900C3D776 /* Sources */,
 				DE56824722903B5900C3D776 /* Frameworks */,
 				DE56824822903B5900C3D776 /* Resources */,
+				A13B57A3B55D0E79DA447064 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -701,6 +751,7 @@
 				DECB953D22954F070057E943 /* Camera_47.png in Resources */,
 				DECB94DB22954F070057E943 /* Camera_162.png in Resources */,
 				DECB953422954F070057E943 /* Camera_120.png in Resources */,
+				DE3C99B122A8293000C48704 /* hand.gif in Resources */,
 				DECB953F22954F070057E943 /* Camera_130.png in Resources */,
 				DECB953C22954F070057E943 /* Camera_90.png in Resources */,
 				DECB94D922954F070057E943 /* Camera_177.png in Resources */,
@@ -802,6 +853,7 @@
 				DECB950522954F070057E943 /* Camera_129.png in Resources */,
 				DECB956522954F070057E943 /* Camera_181.png in Resources */,
 				DECB951F22954F070057E943 /* Camera_96.png in Resources */,
+				DE6C7EB122A58926007702AF /* videoL.mp4 in Resources */,
 				DECB952722954F070057E943 /* Camera_123.png in Resources */,
 				DECB94F922954F070057E943 /* Camera_102.png in Resources */,
 				DECB952022954F070057E943 /* Camera_82.png in Resources */,
@@ -812,6 +864,7 @@
 				DECB952622954F070057E943 /* Camera_137.png in Resources */,
 				DECB94EA22954F070057E943 /* Camera_2.png in Resources */,
 				DECB950022954F070057E943 /* Camera_128.png in Resources */,
+				DE6C7EBB22A6D86F007702AF /* grey.gif in Resources */,
 				DECB951822954F070057E943 /* Camera_106.png in Resources */,
 				DECB955922954F070057E943 /* Camera_182.png in Resources */,
 				DECB953222954F070057E943 /* Camera_135.png in Resources */,
@@ -849,6 +902,7 @@
 				DECB955122954F070057E943 /* Camera_126.png in Resources */,
 				DECB955522954F070057E943 /* Camera_86.png in Resources */,
 				DECB94D822954F070057E943 /* Camera_4.png in Resources */,
+				DE3C99B322A9467700C48704 /* ExperienceStorage.plist in Resources */,
 				DECB94E022954F070057E943 /* Camera_11.png in Resources */,
 				DECB952C22954F070057E943 /* Camera_97.png in Resources */,
 				DECB94FE22954F070057E943 /* Camera_63.png in Resources */,
@@ -888,6 +942,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		33DA2E7DCB38E707FF3080F1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Timer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A13B57A3B55D0E79DA447064 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Timer/Pods-Timer-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Timer/Pods-Timer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DE56824622903B5900C3D776 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -895,8 +996,12 @@
 			files = (
 				DE56826022903E2A00C3D776 /* TimerView.swift in Sources */,
 				DEEDA615229821920000BE5B /* ExperienceController.swift in Sources */,
+				DE3C99AD22A81D2000C48704 /* ARResourceManager.swift in Sources */,
+				DE3C99B722AAB55500C48704 /* DiskCareTaker.swift in Sources */,
 				DE56825022903B5900C3D776 /* ViewController.swift in Sources */,
+				DE3C99B522AA9E4200C48704 /* ARResources.swift in Sources */,
 				DE56824E22903B5900C3D776 /* AppDelegate.swift in Sources */,
+				DE6C7EAF22A580CB007702AF /* ExperienceScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,6 +1145,7 @@
 		};
 		DE56825D22903B5D00C3D776 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 380D889AA9D1E5729977B4D7 /* Pods-Timer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1058,6 +1164,7 @@
 		};
 		DE56825E22903B5D00C3D776 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5FFE317435E10229E22F03F9 /* Pods-Timer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

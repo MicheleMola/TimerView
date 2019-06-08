@@ -8,6 +8,7 @@
 
 import UIKit
 import ARKit
+import SwiftyGif
 
 class ExperienceController: UIViewController {
   
@@ -18,8 +19,14 @@ class ExperienceController: UIViewController {
   
   @IBOutlet weak var timerView: TimerView!
   
-  @IBOutlet weak var buildingImageViewWidthConstraint: NSLayoutConstraint!
-  @IBOutlet weak var buildingImageViewHeightConstraint: NSLayoutConstraint!
+  var experienceScene: ExperienceScene?
+  
+  @IBOutlet weak var progressLabel: UILabel!
+  
+  @IBOutlet weak var progressStackView: UIStackView!
+  
+  @IBOutlet weak var gifImageView: UIImageView!
+    
   /// A serial queue for thread safety when modifying the SceneKit node graph.
   let updateQueue = DispatchQueue(label: Bundle.main.bundleIdentifier! + ".serialSceneKitQueue")
   
@@ -27,11 +34,6 @@ class ExperienceController: UIViewController {
   var session: ARSession {
     return ARSceneView.session
   }
-  
-  var isPlaced = false
-  
-  var initialLeadingConstraint: CGFloat = 0
-  var initialTopConstraint: CGFloat = 0
   
   override func viewDidLoad() {
     ARSceneView.delegate = self
@@ -46,6 +48,7 @@ class ExperienceController: UIViewController {
     self.timerView.lineWidth = 6
     self.timerView.duration = 8
     self.timerView.timerFontSize = 20
+    self.timerView.delegate = self
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -54,8 +57,32 @@ class ExperienceController: UIViewController {
   
     setupView()
     
+    setupExperience()
+    
+    testDisk()
+    
     // Start the AR experience
-    resetTracking()
+    //resetTracking()
+  }
+  
+  func testDisk() {
+    
+    let resource = ARResource(experienceID: "ok", video: "ok", refImage: "ok", refARImage: "ok", model3D: "ok")
+    let contents = ARResources(size: 30, resources: [resource])
+    
+    do {
+      try DiskCaretaker.save(contents, to: "contents")
+      
+      let resources = try DiskCaretaker.retrieve(ARResources.self, from: "contents")
+     
+      print(resources)
+      
+    }catch let error {
+      print(error)
+    }
+    
+    
+    
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -64,23 +91,56 @@ class ExperienceController: UIViewController {
     session.pause()
   }
   
-  func resetTracking() {
+  func setupExperience() {
     
-    guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
-      fatalError("Missing expected asset catalog resources.")
+    download() { result in
+      
+      if let image = UIImage(named: "Lunedì")?.cgImage {
+        ARResourceManager.shared.add(image: image, withName: "Lunedì", andWidth: 15)
+      }
+    
+      self.resetTracking()
+      
+      self.startTutorial()
     }
+  }
+  
+  func download(completion: @escaping (_ result: Bool) -> ()) {
+    
+    var runCount = 0
+    
+    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [unowned self] timer in
+      
+      runCount += 1
+      
+      self.progressLabel.text = "\(runCount) %"
+      
+      if runCount == 5 {
+        timer.invalidate()
+        
+        completion(true)
+      }
+    }
+  }
+  
+  func resetTracking() {
+    let referenceImages = ARResourceManager.shared.get()
     
     let configuration = ARWorldTrackingConfiguration()
     configuration.detectionImages = referenceImages
     session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     
-    startTutorial()
+    self.experienceScene = nil
+    
   }
   
   func startTutorial() {
-    buildingImageView.isHidden = false
+//    buildingImageView.isHidden = false
+    progressStackView.isHidden = true
     
     // Start Gif
+    let gifImage = UIImage(gifName: "hand.gif")
+    self.gifImageView.setGifImage(gifImage)
     
     // Start timer and then move image to the bottom-right corner
     animateBuildingImageView()
@@ -92,11 +152,12 @@ class ExperienceController: UIViewController {
       
       self.buildingImageView.alpha = 0
       self.smallBuildingImageView.alpha = 1
+      self.gifImageView.alpha = 0
     })
-  
   }
 
   func setupView() {
+    
     
   }
   
@@ -108,42 +169,33 @@ extension ExperienceController: ARSCNViewDelegate {
     let referenceImage = imageAnchor.referenceImage
     
     updateQueue.async {
-      // Create a plane to visualize the initial position of the detected image.
-      let plane = SCNPlane(width: referenceImage.physicalSize.width,
-                           height: referenceImage.physicalSize.height)
-      let planeNode = SCNNode(geometry: plane)
-      planeNode.opacity = 0.25
+      let videoNode = SCNNode()
       
-      /*
-       `SCNPlane` is vertically oriented in its local coordinate space, but
-       `ARImageAnchor` assumes the image is horizontal in its local space, so
-       rotate the plane to match.
-       */
-      planeNode.eulerAngles.x = -.pi / 2
+      let width = referenceImage.physicalSize.width
+      let height = referenceImage.physicalSize.height
       
-      planeNode.runAction(self.imageHighlightAction)
+      videoNode.geometry = SCNPlane(width: width, height: height)
+      
+      videoNode.eulerAngles.x = -.pi / 2
+      
+      self.experienceScene = ExperienceScene(size: CGSize(width: 1000, height: 1000), videoResource: "videoL", _extension: "mp4")
+    
+      self.experienceScene?.backgroundColor = .clear
+      
+      videoNode.geometry?.firstMaterial?.diffuse.contents = self.experienceScene
+      
+      videoNode.rotation = SCNVector4(0, 1, 1, CGFloat.pi)
+      videoNode.scale.x *= -1
       
       // Add the plane visualization to the scene.
-      node.addChildNode(planeNode)
+      node.addChildNode(videoNode)
     }
     
     DispatchQueue.main.async {
-      let imageName = referenceImage.name ?? ""
       
       self.smallBuildingImageView.alpha = 0
       self.timerView.startAnimation()
     }
-  }
-  
-  var imageHighlightAction: SCNAction {
-    return .sequence([
-      .wait(duration: 0),
-      .fadeOpacity(to: 0.85, duration: 2),
-      .fadeOpacity(to: 0.15, duration: 2),
-      .fadeOpacity(to: 0.85, duration: 2),
-      .fadeOut(duration: 2),
-      .removeFromParentNode()
-      ])
   }
 }
 
@@ -169,6 +221,13 @@ extension ExperienceController: ARSessionDelegate {
   }
   
   func restartExperience() {
+    resetTracking()
+  }
+  
+}
+
+extension ExperienceController: TimerViewDelegate {
+  func restart() {
     resetTracking()
   }
   
